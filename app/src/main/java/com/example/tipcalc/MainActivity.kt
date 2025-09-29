@@ -39,6 +39,7 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
     var billAmount by remember { mutableStateOf("") }
     var dishesCount by remember { mutableStateOf("") }
     var tipPercentage by remember { mutableStateOf(0f) }
+    var selectedDiscount by remember { mutableStateOf(0) } // 0: ниче, 1-3%, 2-5%, 3-7%, 4-10%
 
     Column(
         modifier = modifier
@@ -46,8 +47,10 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
             .padding(16.dp),
         verticalArrangement = Arrangement.Top
     ) {
-        Row(    verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text(text = "Сумма заказа:")
             TextField(
                 value = billAmount,
@@ -60,8 +63,10 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Row(    verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text(text = "Количество блюд:")
             TextField(
                 value = dishesCount,
@@ -82,6 +87,24 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
             steps = 25,
             modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ){
+            Text(text = "Скидка:")
+            RadioButton(selected = selectedDiscount == 1, onClick = null)
+            Text("3%")
+            RadioButton(selected = selectedDiscount == 2, onClick = null)
+            Text("5%")
+            RadioButton(selected = selectedDiscount == 3, onClick = null)
+            Text("7%")
+            RadioButton(selected = selectedDiscount == 4, onClick = null)
+            Text("10%")
+        }
+
     }
 }
 
