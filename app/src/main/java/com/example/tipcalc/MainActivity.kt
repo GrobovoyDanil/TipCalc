@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Alignment
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +38,7 @@ class MainActivity : ComponentActivity() {
 fun TipCalculatorScreen(modifier: Modifier = Modifier) {
     var billAmount by remember { mutableStateOf("") }
     var dishesCount by remember { mutableStateOf("") }
+    var tipPercentage by remember { mutableStateOf(0f) }
 
     Column(
         modifier = modifier
@@ -44,19 +46,40 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
             .padding(16.dp),
         verticalArrangement = Arrangement.Top
     ) {
-        Text(text = "Сумма счета")
-        TextField(
-            value = billAmount,
-            onValueChange = { billAmount = it },
-            modifier = Modifier.fillMaxWidth()
-        )
+        Row(    verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()) {
+            Text(text = "Сумма заказа:")
+            TextField(
+                value = billAmount,
+                onValueChange = { billAmount = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
+            )
+        }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
-        Text(text = "Количество блюд")
-        TextField(
-            value = dishesCount,
-            onValueChange = { dishesCount = it },
+        Row(    verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()) {
+            Text(text = "Количество блюд:")
+            TextField(
+                value = dishesCount,
+                onValueChange = { dishesCount = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
+            )
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(text = "Чаевые: ${tipPercentage.toInt()}%")
+        Slider(
+            value = tipPercentage,
+            onValueChange = { tipPercentage = it },
+            valueRange = 0f..25f,
+            steps = 25,
             modifier = Modifier.fillMaxWidth()
         )
     }
