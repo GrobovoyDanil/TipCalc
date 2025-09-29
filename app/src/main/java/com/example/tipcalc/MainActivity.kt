@@ -12,6 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.tipcalc.ui.theme.TipCalcTheme
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,8 +24,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TipCalcTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    TipCalculatorScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -31,17 +34,38 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
+fun TipCalculatorScreen(modifier: Modifier = Modifier) {
+    var billAmount by remember { mutableStateOf("") }
+    var dishesCount by remember { mutableStateOf("") }
+
+    Column(
         modifier = modifier
-    )
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Top
+    ) {
+        Text(text = "Сумма счета")
+        TextField(
+            value = billAmount,
+            onValueChange = { billAmount = it },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(text = "Количество блюд")
+        TextField(
+            value = dishesCount,
+            onValueChange = { dishesCount = it },
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun TipCalculatorPreview() {
     TipCalcTheme {
-        Greeting("Android")
+        TipCalculatorScreen()
     }
 }
