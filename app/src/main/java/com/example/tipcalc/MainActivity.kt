@@ -41,6 +41,17 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
     var tipPercentage by remember { mutableStateOf(0f) }
     var selectedDiscount by remember { mutableStateOf(0) } // 0: ниче, 1-3%, 2-5%, 3-7%, 4-10%
 
+    LaunchedEffect(dishesCount) { // выполняется при изменении кол-ва блюд
+        val count = dishesCount.toIntOrNull() ?: 0
+        selectedDiscount = when {
+            count in 1..2 -> 1
+            count in 3..5 -> 2
+            count in 6..10 -> 3
+            count > 10 -> 4
+            else -> 0
+        }
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
