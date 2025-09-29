@@ -39,18 +39,31 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
     var billAmount by remember { mutableStateOf("") }
     var dishesCount by remember { mutableStateOf("") }
     var tipPercentage by remember { mutableStateOf(0f) }
-    var selectedDiscount by remember { mutableStateOf(0) } // 0: ниче, 1-3%, 2-5%, 3-7%, 4-10%
+    var selectedDiscount by remember { mutableStateOf(0) } // 0- ниче, 1-3, 2-5, 3-7, 4-10
+
+    val bill = billAmount.toDoubleOrNull() ?: 0.0 // на float ругаеться
+    val dishes = dishesCount.toIntOrNull() ?: 0
+
 
     LaunchedEffect(dishesCount) { // выполняется при изменении кол-ва блюд
-        val count = dishesCount.toIntOrNull() ?: 0
         selectedDiscount = when {
-            count in 1..2 -> 1
-            count in 3..5 -> 2
-            count in 6..10 -> 3
-            count > 10 -> 4
+            dishes in 1..2 -> 1
+            dishes in 3..5 -> 2
+            dishes in 6..10 -> 3
+            dishes > 10 -> 4
             else -> 0
         }
     }
+    val discountPercentage = when (selectedDiscount) {
+        1 -> 3.0
+        2 -> 5.0
+        3 -> 7.0
+        4 -> 10.0
+        else -> 0.0
+    }
+
+    val tipAmount = bill * (tipPercentage / 100)
+    val discountAmount = bill * (discountPercentage / 100)
 
     Column(
         modifier = modifier
@@ -116,6 +129,13 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
             Text("10%")
         }
 
+        Spacer(modifier = Modifier.height(20.dp))
+
+        var totalAmount = bill + tipAmount - discountAmount
+
+        Text(text = "Сумма чаевых: $tipAmount")
+        Text(text = "Сумма скидки: $discountAmount")
+        Text(text = "Итоговая сумма: $totalAmount")
     }
 }
 
