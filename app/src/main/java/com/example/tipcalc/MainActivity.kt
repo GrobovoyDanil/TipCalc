@@ -81,7 +81,6 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
                 onValueChange = { billAmount = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp),
             )
         }
 
@@ -97,7 +96,6 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
                 onValueChange = { dishesCount = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp),
             )
         }
 
